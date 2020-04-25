@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Template 1</title>
+        <title>Simple 5x5 Template</title>
         <style type="text/css">
 
     table {
@@ -32,54 +32,55 @@
     }
 
 </style>
-        <style type="text/css" media="print">h1, form, #footer {
-            display: none
-        }</style>
-<body>
+        <style type="text/css" media="print">
 
-        <!-- div with class "card" will be filled in and repeated -->
-    <div class="card">
+</style>
+<body>
+        <!-- div with class "card-template" will be filled in and repeated -->
+        <!-- elements with class "item" will be filled in with items from word list -->
+        <!-- (the existing content, if any, will be replaced) -->
+    <div class="card-template">
         <table>
             <thead>
                 <tr>
-                    <th colspan="5">${title}</th>
+                    <th colspan="5">BINGO</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>${item}</td>
-                    <td>${item}</td>
-                    <td>${item}</td>
-                    <td>${item}</td>
-                    <td>${item}</td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
                 </tr>
                 <tr>
-                    <td>${item}</td>
-                    <td>${item}</td>
-                    <td>${item}</td>
-                    <td>${item}</td>
-                    <td>${item}</td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
                 </tr>
                 <tr>
-                    <td>${item}</td>
-                    <td>${item}</td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
                     <td><strong>Free Space</strong></td>
-                    <td>${item}</td>
-                    <td>${item}</td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
                 </tr>
                 <tr>
-                    <td>${item}</td>
-                    <td>${item}</td>
-                    <td>${item}</td>
-                    <td>${item}</td>
-                    <td>${item}</td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
                 </tr>
                 <tr>
-                    <td>${item}</td>
-                    <td>${item}</td>
-                    <td>${item}</td>
-                    <td>${item}</td>
-                    <td>${item}</td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
+                    <td><span class="item"/></td>
                 </tr>
             </tbody>
         </table>
