@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/server -Dhttp.port=$PORT -Dconfig.file=conf/heroku.conf
+web: target/universal/stage/bin/custom-bingo-builder -Dhttp.port=$PORT -Dconfig.file=conf/heroku.conf
