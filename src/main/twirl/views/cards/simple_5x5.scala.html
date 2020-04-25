@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Template 1</title>
+        <style type="text/css">
+
+    table {
+        background-color: black;
+        border-collapse: collapse;
+        margin-bottom: 1em;
+        margin-right: 1em;
+        float: left;
+    }
+
+    td, th {
+        border: 1px solid black;
+        text-align: center;
+    }
+
+    th {
+        color: white;
+        height: 60px;
+        font-size: 32px;
+    }
+
+    td {
+        background-color: white;
+        width: 100px;
+        height: 100px;
+    }
+
+</style>
+        <style type="text/css" media="print">h1, form, #footer {
+            display: none
+        }</style>
+<body>
+
+        <!-- div with class "card" will be filled in and repeated -->
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="5">${title}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                </tr>
+                <tr>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                </tr>
+                <tr>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                    <td><strong>Free Space</strong></td>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                </tr>
+                <tr>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                </tr>
+                <tr>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                    <td>${item}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
