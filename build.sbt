@@ -3,9 +3,16 @@ organization := "dev.marksman"
 
 version := "1.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val root = (project in file("."))
+  .settings(
+    publishArtifact in(Compile, packageDoc) := false,
+    publishArtifact in packageDoc := false,
+    sources in(Compile, doc) := Seq.empty
+  )
+  .enablePlugins(PlayScala)
+  .disablePlugins(PlayLayoutPlugin)
 
-scalaVersion := "2.13.1"
+scalaVersion := "2.13.2"
 
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test

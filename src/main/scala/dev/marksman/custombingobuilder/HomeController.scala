@@ -1,4 +1,4 @@
-package controllers
+package dev.marksman.custombingobuilder
 
 import javax.inject._
 import play.api.mvc._

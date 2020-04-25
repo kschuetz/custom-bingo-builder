@@ -1,5 +1,6 @@
-package controllers
+package dev.marksman.custombingobuilder.controllers
 
+import dev.marksman.custombingobuilder.HomeController
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice._
 import play.api.test.Helpers._
