@@ -4,7 +4,7 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET        /dev.marksman.custombingobuilder.HomeController.index
+GET        /        dev.marksman.custombingobuilder.controllers.HomeController.index
 
 GET        /templates/simple5x5        dev.marksman.custombingobuilder.controllers.Templates.simple5x5()
 
