@@ -25,33 +25,33 @@ class TemplateEngineSpec extends FunSuite with Matchers {
     //    println(documentText)
 
     allTds shouldBe Vector(
-      """<td><span class="insert-word">foo</span></td>""",
-      """<td><span class="insert-word">bar</span></td>""",
-      """<td><span class="insert-word">baz</span></td>""",
-      """<td><span class="insert-word">qux</span></td>""",
+      """<td><span class="extra-class">foo</span></td>""",
+      """<td><span class="extra-class-1 extra-class-2">bar</span></td>""",
+      """<td><span>baz</span></td>""",
+      """<td><span>qux</span></td>""",
       """<td><strong>Free Space</strong></td>""",
-      """<td><span class="insert-word">quux</span></td>""",
-      """<td><span class="insert-word">corge</span></td>""",
-      """<td><span class="insert-word">grault</span></td>""",
-      """<td><span class="insert-word">garply</span></td>""",
-      """<td><span class="insert-word">foo</span></td>""",
-      """<td><span class="insert-word">bar</span></td>""",
-      """<td><span class="insert-word">baz</span></td>""",
-      """<td><span class="insert-word">qux</span></td>""",
+      """<td><span>quux</span></td>""",
+      """<td><span>corge</span></td>""",
+      """<td><span>grault</span></td>""",
+      """<td><span>garply</span></td>""",
+      """<td><span class="extra-class">foo</span></td>""",
+      """<td><span class="extra-class-1 extra-class-2">bar</span></td>""",
+      """<td><span>baz</span></td>""",
+      """<td><span>qux</span></td>""",
       """<td><strong>Free Space</strong></td>""",
-      """<td><span class="insert-word">quux</span></td>""",
-      """<td><span class="insert-word">corge</span></td>""",
-      """<td><span class="insert-word">grault</span></td>""",
-      """<td><span class="insert-word">garply</span></td>""",
-      """<td><span class="insert-word">foo</span></td>""",
-      """<td><span class="insert-word">bar</span></td>""",
-      """<td><span class="insert-word">baz</span></td>""",
-      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
+      """<td><span>quux</span></td>""",
+      """<td><span>corge</span></td>""",
+      """<td><span>grault</span></td>""",
+      """<td><span>garply</span></td>""",
+      """<td><span class="extra-class">foo</span></td>""",
+      """<td><span class="extra-class-1 extra-class-2">bar</span></td>""",
+      """<td><span>baz</span></td>""",
+      """<td><span>!!!not enough words provided!!!</span></td>""",
       """<td><strong>Free Space</strong></td>""",
-      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
-      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
-      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
-      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>"""
+      """<td><span>!!!not enough words provided!!!</span></td>""",
+      """<td><span>!!!not enough words provided!!!</span></td>""",
+      """<td><span>!!!not enough words provided!!!</span></td>""",
+      """<td><span>!!!not enough words provided!!!</span></td>"""
     )
 
   }
@@ -65,15 +65,15 @@ class TemplateEngineSpec extends FunSuite with Matchers {
     val allTds = Vector() ++ extractTds.findAllIn(documentText)
 
     allTds shouldBe Vector(
-      """<td><span class="insert-word"><b>simple</b></span></td>""",
-      """<td><span class="insert-word">The quick brown <b>fox</b> jumped over the lazy <b>dogs</b></span></td>""",
-      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
-      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
+      """<td><span class="extra-class"><b>simple</b></span></td>""",
+      """<td><span class="extra-class-1 extra-class-2">The quick brown <b>fox</b> jumped over the lazy <b>dogs</b></span></td>""",
+      """<td><span>!!!not enough words provided!!!</span></td>""",
+      """<td><span>!!!not enough words provided!!!</span></td>""",
       """<td><strong>Free Space</strong></td>""",
-      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
-      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
-      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
-      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""")
+      """<td><span>!!!not enough words provided!!!</span></td>""",
+      """<td><span>!!!not enough words provided!!!</span></td>""",
+      """<td><span>!!!not enough words provided!!!</span></td>""",
+      """<td><span>!!!not enough words provided!!!</span></td>""")
 
   }
 
@@ -104,8 +104,8 @@ class TemplateEngineSpec extends FunSuite with Matchers {
                 </thead>
                 <tbody>
                   <tr>
-                    <td><span class="insert-word">This</span></td>
-                    <td><span class="insert-word">Will</span></td>
+                    <td><span class="insert-word extra-class">This</span></td>
+                    <td><span class="insert-word extra-class-1 extra-class-2">Will</span></td>
                     <td><span class="insert-word">Be</span></td>
                   </tr>
                   <tr>

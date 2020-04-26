@@ -13,7 +13,10 @@ object TemplateEngine {
   val CardTemplateClass = "card-template"
 
   val CardTemplateSelector = s"div.$CardTemplateClass"
-  val InsertWordSelector = ".insert-word"
+
+  val InsertWord = "insert-word"
+
+  val InsertWordSelector = s".$InsertWord"
 
   val NotEnoughWords = "!!!not enough words provided!!!"
 }
@@ -72,6 +75,7 @@ class TemplateEngine {
     val wordCount = card.shuffledWords.size
     for (i <- 0 until size) {
       val element = itemElements.get(i)
+      element.removeClass(InsertWord)
       if (i < wordCount) {
         element.html(card.shuffledWords(i).value.content)
       } else {
