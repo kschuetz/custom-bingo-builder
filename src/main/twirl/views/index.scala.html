@@ -1,5 +1,15 @@
 @()
 
-    @main("Welcome to Play") {
-        <h1>Welcome to Play!</h1>
+@main("Welcome to Play") {
+    <h1>Welcome to Play!</h1>
+
+    @helper.form(action = dev.marksman.custombingobuilder.controllers.routes.HomeController.run, Symbol("enctype") -> "multipart/form-data") {
+
+        <input type="file" name="template">
+
+        <p>
+            <input type="submit">
+        </p>
+
     }
+}
