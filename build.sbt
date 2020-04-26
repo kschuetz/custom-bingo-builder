@@ -18,6 +18,8 @@ libraryDependencies += guice
 libraryDependencies += "org.jsoup" % "jsoup" % "1.13.1"
 libraryDependencies += "com.googlecode.owasp-java-html-sanitizer" % "owasp-java-html-sanitizer" % "20191001.1"
 libraryDependencies += "org.typelevel" %% "cats-core" % "2.0.0"
+libraryDependencies += "dev.zio" %% "zio" % "1.0.0-RC18-2"
+libraryDependencies += "dev.marksman" % "kraftwerk" % "0.6.2"
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
 
 // Adds additional packages into Twirl

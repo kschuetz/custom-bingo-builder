@@ -1,16 +1,16 @@
 package dev.marksman.custombingobuilder.service
 
-import dev.marksman.custombingobuilder.types.{PopulatedCard, SanitizedHtml}
+import dev.marksman.custombingobuilder.types.{CardData, SanitizedHtml, Word}
 import org.scalatest.{FunSuite, Matchers}
 
 class TemplateEngineSpec extends FunSuite with Matchers {
 
-  private val justRight = PopulatedCard(Vector("foo", "bar", "baz", "qux", "quux", "corge", "grault", "garply")).map(SanitizedHtml)
-  private val tooMany = PopulatedCard(Vector("foo", "bar", "baz", "qux", "quux", "corge", "grault", "garply", "too-many")).map(SanitizedHtml)
-  private val notEnough = PopulatedCard(Vector("foo", "bar", "baz")).map(SanitizedHtml)
+  private val justRight = buildCardData(Vector("foo", "bar", "baz", "qux", "quux", "corge", "grault", "garply"))
+  private val tooMany = buildCardData(Vector("foo", "bar", "baz", "qux", "quux", "corge", "grault", "garply", "too-many"))
+  private val notEnough = buildCardData(Vector("foo", "bar", "baz"))
 
-  private val htmlItems = PopulatedCard(Vector("<b>simple</b>",
-    "The quick brown <b>fox</b> jumped over the lazy <b>dogs</b>")).map(SanitizedHtml)
+  private val htmlItems = buildCardData(Vector("<b>simple</b>",
+    "The quick brown <b>fox</b> jumped over the lazy <b>dogs</b>"))
 
   private val extractTds = """<td>.*</td>""".r
 
@@ -125,5 +125,6 @@ class TemplateEngineSpec extends FunSuite with Matchers {
         </html>
 """)
 
-
+  private def buildCardData(data: Iterable[String]): CardData[SanitizedHtml] =
+    CardData(data.map(s => Word(SanitizedHtml(s))).toVector)
 }

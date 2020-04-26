@@ -3,7 +3,7 @@ package dev.marksman.custombingobuilder.service
 import java.util
 
 import cats.data.Validated
-import dev.marksman.custombingobuilder.types.{PopulatedCard, SanitizedHtml}
+import dev.marksman.custombingobuilder.types.{CardData, SanitizedHtml}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
 
@@ -23,7 +23,7 @@ class TemplateEngine {
   import TemplateEngine._
 
   def render(templateSource: SanitizedHtml,
-             cards: Vector[PopulatedCard[SanitizedHtml]]): Validated[String, String] =
+             cards: Vector[CardData[SanitizedHtml]]): Validated[String, String] =
     parseDocument(templateSource.content)
       .andThen(document =>
         findCardTemplate(document)
@@ -53,7 +53,7 @@ class TemplateEngine {
 
 
   private def transform(document: Document, cardTemplate: Element, cardHost: Element,
-                        cards: Vector[PopulatedCard[SanitizedHtml]]): Validated[String, Document] = {
+                        cards: Vector[CardData[SanitizedHtml]]): Validated[String, Document] = {
     cardTemplate.remove();
     cardTemplate.removeClass(CardTemplateClass)
     val toInsert = new util.ArrayList[Element]
@@ -66,14 +66,14 @@ class TemplateEngine {
     Validated.valid(document)
   }
 
-  private def fillInCard(card: PopulatedCard[SanitizedHtml], element: Element): Unit = {
+  private def fillInCard(card: CardData[SanitizedHtml], element: Element): Unit = {
     val itemElements = element.select(InsertWordSelector)
     val size = itemElements.size()
-    val wordCount = card.words.size
+    val wordCount = card.shuffledWords.size
     for (i <- 0 until size) {
       val element = itemElements.get(i)
       if (i < wordCount) {
-        element.html(card.words(i).content)
+        element.html(card.shuffledWords(i).value.content)
       } else {
         element.html(NotEnoughWords)
       }

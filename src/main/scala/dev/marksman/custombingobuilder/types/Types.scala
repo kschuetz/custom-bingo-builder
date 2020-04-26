@@ -1,7 +1,22 @@
 package dev.marksman.custombingobuilder.types
 
+object GroupId {
+  def groupId(id: Int): GroupId = new GroupId(id)
+
+  val default: GroupId = groupId(0)
+}
+
+class GroupId(val id: Int) extends AnyVal
+
+case class Word[A](value: A,
+                   group: GroupId = GroupId.default) {
+  def map[B](f: A => B): Word[B] = Word(f(value), group)
+}
+
+
 case class SanitizedHtml(content: String)
 
-case class PopulatedCard[A](words: Vector[A]) {
-  def map[B](f: A => B): PopulatedCard[B] = PopulatedCard(words.map(f))
+
+case class CardData[A](shuffledWords: Vector[Word[A]]) {
+  def map[B](f: A => B): CardData[B] = CardData(shuffledWords.map(_.map(f)))
 }
