@@ -2,6 +2,8 @@ package dev.marksman.custombingobuilder.controllers
 
 import akka.stream.scaladsl.Sink
 import akka.util.ByteString
+import cats.data.Validated.{Invalid, Valid}
+import dev.marksman.custombingobuilder.service.TemplateSanitizer
 import javax.inject._
 import play.api.libs.streams.Accumulator
 import play.api.mvc.MultipartFormData.FilePart
@@ -13,7 +15,8 @@ import play.core.parsers.Multipart.{FileInfo, FilePartHandler}
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
+class HomeController @Inject()(val controllerComponents: ControllerComponents,
+                               templateSanitizer: TemplateSanitizer) extends BaseController {
   private implicit val executionContext = controllerComponents.executionContext
 
   private val MaxTemplateSize = 32768
@@ -32,11 +35,15 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
 
   def run = Action(parse.multipartFormData(handlePartAsFile,
     MaxTemplateSize)) { request =>
-    val templateOption = request.body.file("template").map {
+    val template = request.body.file("template").map {
       case FilePart(key, filename, contentType, data, fileSize, dispositionType) =>
         data.utf8String
     }
-    Ok(s"File uploaded: $templateOption")
+
+    templateSanitizer.sanitizeTemplate(template.getOrElse("")) match {
+      case Valid(sanitizedTemplate) => Ok(s"template: ${sanitizedTemplate.content}")
+      case Invalid(e) => BadRequest(e.toString)
+    }
   }
 
   private def handlePartAsFile: FilePartHandler[ByteString] = {
