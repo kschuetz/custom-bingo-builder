@@ -13,7 +13,7 @@ object TemplateEngine {
   val CardTemplateClass = "card-template"
 
   val CardTemplateSelector = s"div.$CardTemplateClass"
-  val ItemSelector = ".item"
+  val InsertWordSelector = ".insert-word"
 
   val NotEnoughWords = "!!!not enough words provided!!!"
 }
@@ -28,7 +28,7 @@ class TemplateEngine {
       .andThen(document =>
         findCardTemplate(document)
           .andThen(cardTemplate => findCardsHost(cardTemplate)
-            .andThen(cardsHost => foo(document, cardTemplate, cardsHost, cards))))
+            .andThen(cardsHost => transform(document, cardTemplate, cardsHost, cards))))
       .map(renderDocument)
 
   private def parseDocument(source: String): Validated[String, Document] =
@@ -52,8 +52,8 @@ class TemplateEngine {
       "card template has no parent")
 
 
-  private def foo(document: Document, cardTemplate: Element, cardHost: Element,
-                  cards: Vector[PopulatedCard[SanitizedHtml]]): Validated[String, Document] = {
+  private def transform(document: Document, cardTemplate: Element, cardHost: Element,
+                        cards: Vector[PopulatedCard[SanitizedHtml]]): Validated[String, Document] = {
     cardTemplate.remove();
     cardTemplate.removeClass(CardTemplateClass)
     val toInsert = new util.ArrayList[Element]
@@ -67,7 +67,7 @@ class TemplateEngine {
   }
 
   private def fillInCard(card: PopulatedCard[SanitizedHtml], element: Element): Unit = {
-    val itemElements = element.select(".item")
+    val itemElements = element.select(InsertWordSelector)
     val size = itemElements.size()
     val wordCount = card.words.size
     for (i <- 0 until size) {

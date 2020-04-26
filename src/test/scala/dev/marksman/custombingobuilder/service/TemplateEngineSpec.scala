@@ -25,33 +25,33 @@ class TemplateEngineSpec extends FunSuite with Matchers {
     //    println(documentText)
 
     allTds shouldBe Vector(
-      """<td><span class="item">foo</span></td>""",
-      """<td><span class="item">bar</span></td>""",
-      """<td><span class="item">baz</span></td>""",
-      """<td><span class="item">qux</span></td>""",
+      """<td><span class="insert-word">foo</span></td>""",
+      """<td><span class="insert-word">bar</span></td>""",
+      """<td><span class="insert-word">baz</span></td>""",
+      """<td><span class="insert-word">qux</span></td>""",
       """<td><strong>Free Space</strong></td>""",
-      """<td><span class="item">quux</span></td>""",
-      """<td><span class="item">corge</span></td>""",
-      """<td><span class="item">grault</span></td>""",
-      """<td><span class="item">garply</span></td>""",
-      """<td><span class="item">foo</span></td>""",
-      """<td><span class="item">bar</span></td>""",
-      """<td><span class="item">baz</span></td>""",
-      """<td><span class="item">qux</span></td>""",
+      """<td><span class="insert-word">quux</span></td>""",
+      """<td><span class="insert-word">corge</span></td>""",
+      """<td><span class="insert-word">grault</span></td>""",
+      """<td><span class="insert-word">garply</span></td>""",
+      """<td><span class="insert-word">foo</span></td>""",
+      """<td><span class="insert-word">bar</span></td>""",
+      """<td><span class="insert-word">baz</span></td>""",
+      """<td><span class="insert-word">qux</span></td>""",
       """<td><strong>Free Space</strong></td>""",
-      """<td><span class="item">quux</span></td>""",
-      """<td><span class="item">corge</span></td>""",
-      """<td><span class="item">grault</span></td>""",
-      """<td><span class="item">garply</span></td>""",
-      """<td><span class="item">foo</span></td>""",
-      """<td><span class="item">bar</span></td>""",
-      """<td><span class="item">baz</span></td>""",
-      """<td><span class="item">!!!not enough words provided!!!</span></td>""",
+      """<td><span class="insert-word">quux</span></td>""",
+      """<td><span class="insert-word">corge</span></td>""",
+      """<td><span class="insert-word">grault</span></td>""",
+      """<td><span class="insert-word">garply</span></td>""",
+      """<td><span class="insert-word">foo</span></td>""",
+      """<td><span class="insert-word">bar</span></td>""",
+      """<td><span class="insert-word">baz</span></td>""",
+      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
       """<td><strong>Free Space</strong></td>""",
-      """<td><span class="item">!!!not enough words provided!!!</span></td>""",
-      """<td><span class="item">!!!not enough words provided!!!</span></td>""",
-      """<td><span class="item">!!!not enough words provided!!!</span></td>""",
-      """<td><span class="item">!!!not enough words provided!!!</span></td>"""
+      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
+      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
+      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
+      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>"""
     )
 
   }
@@ -65,15 +65,15 @@ class TemplateEngineSpec extends FunSuite with Matchers {
     val allTds = Vector() ++ extractTds.findAllIn(documentText)
 
     allTds shouldBe Vector(
-      """<td><span class="item"><b>simple</b></span></td>""",
-      """<td><span class="item">The quick brown <b>fox</b> jumped over the lazy <b>dogs</b></span></td>""",
-      """<td><span class="item">!!!not enough words provided!!!</span></td>""",
-      """<td><span class="item">!!!not enough words provided!!!</span></td>""",
+      """<td><span class="insert-word"><b>simple</b></span></td>""",
+      """<td><span class="insert-word">The quick brown <b>fox</b> jumped over the lazy <b>dogs</b></span></td>""",
+      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
+      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
       """<td><strong>Free Space</strong></td>""",
-      """<td><span class="item">!!!not enough words provided!!!</span></td>""",
-      """<td><span class="item">!!!not enough words provided!!!</span></td>""",
-      """<td><span class="item">!!!not enough words provided!!!</span></td>""",
-      """<td><span class="item">!!!not enough words provided!!!</span></td>""")
+      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
+      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
+      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""",
+      """<td><span class="insert-word">!!!not enough words provided!!!</span></td>""")
 
   }
 
@@ -104,19 +104,19 @@ class TemplateEngineSpec extends FunSuite with Matchers {
                 </thead>
                 <tbody>
                   <tr>
-                    <td><span class="item">This</span></td>
-                    <td><span class="item">Will</span></td>
-                    <td><span class="item">Be</span></td>
+                    <td><span class="insert-word">This</span></td>
+                    <td><span class="insert-word">Will</span></td>
+                    <td><span class="insert-word">Be</span></td>
                   </tr>
                   <tr>
-                    <td><span class="item">Replaced</span></td>
+                    <td><span class="insert-word">Replaced</span></td>
                     <td><strong>Free Space</strong></td>
-                    <td><span class="item"/></td>
+                    <td><span class="insert-word"/></td>
                   </tr>
                   <tr>
-                    <td><span class="item"/></td>
-                    <td><span class="item"/></td>
-                    <td><span class="item"/></td>
+                    <td><span class="insert-word"/></td>
+                    <td><span class="insert-word"/></td>
+                    <td><span class="insert-word"/></td>
                   </tr>
                 </tbody>
               </table>
