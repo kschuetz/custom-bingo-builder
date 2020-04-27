@@ -15,14 +15,12 @@ class TemplateEngineSpec extends FunSuite with Matchers {
   private val extractTds = """<td>.*</td>""".r
 
   test("renders plain text items") {
-    val engine = new TemplateEngine
+    val engine = new TemplateEngine(PostProcessor.doNothing)
 
     val value = engine.render(template, Vector(justRight, tooMany, notEnough))
     assert(value.isValid)
     val documentText = value.getOrElse("invalid")
     val allTds = Vector() ++ extractTds.findAllIn(documentText)
-
-    //    println(documentText)
 
     allTds shouldBe Vector(
       """<td><span class="extra-class">foo</span></td>""",
@@ -57,7 +55,7 @@ class TemplateEngineSpec extends FunSuite with Matchers {
   }
 
   test("renders HTML items") {
-    val engine = new TemplateEngine
+    val engine = new TemplateEngine(PostProcessor.doNothing)
 
     val value = engine.render(template, Vector(htmlItems))
     assert(value.isValid)

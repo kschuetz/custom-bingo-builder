@@ -4,6 +4,7 @@ import java.util
 
 import cats.data.Validated
 import dev.marksman.custombingobuilder.types.{CardData, SanitizedHtml}
+import javax.inject.Inject
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
 
@@ -21,7 +22,7 @@ object TemplateEngine {
   val NotEnoughWords = "!!!not enough words provided!!!"
 }
 
-class TemplateEngine {
+class TemplateEngine @Inject()(postProcessor: PostProcessor) {
 
   import TemplateEngine._
 
@@ -42,7 +43,8 @@ class TemplateEngine {
     }
 
   private def renderDocument(document: Document): String = {
-    document.normalise();
+    postProcessor.postProcessOutput(document)
+    document.normalise()
     document.toString
   }
 
@@ -72,12 +74,12 @@ class TemplateEngine {
   private def fillInCard(card: CardData[SanitizedHtml], element: Element): Unit = {
     val itemElements = element.select(InsertWordSelector)
     val size = itemElements.size()
-    val wordCount = card.shuffledWords.size
+    val wordCount = card.words.size
     for (i <- 0 until size) {
       val element = itemElements.get(i)
       element.removeClass(InsertWord)
       if (i < wordCount) {
-        element.html(card.shuffledWords(i).value.content)
+        element.html(card.words(i).value.content)
       } else {
         element.html(NotEnoughWords)
       }

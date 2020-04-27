@@ -1,14 +1,23 @@
-@()
+@()(implicit request: RequestHeader)
 
-@main("Welcome to Play") {
-    <h1>Welcome to Play!</h1>
+@main("Custom Bingo Builder") {
 
-    @helper.form(action = dev.marksman.custombingobuilder.controllers.routes.HomeController.run, Symbol("enctype") -> "multipart/form-data") {
-
-        <input type="file" name="template">
-
+    @helper.form(action = dev.marksman.custombingobuilder.controllers.routes.HomeController.generate, Symbol("enctype") -> "multipart/form-data") {
+        @helper.CSRF.formField
+        <div>
+            <label for="template">Upload a template:</label>
+            <input type="file" name="template" accept="text/html">
+        </div>
+        <div>
+            <label for="wordlist" style="display: block;">Word list (1 per line, HTML is OK):</label>
+            <textarea name="wordlist" rows="30" cols="120"></textarea>
+        </div>
+        <div>
+            <label for="quantity">Number of cards (between 1 and 100):</label>
+            <input type="number" id="quantity" name="quantity" min="1" max="100" value="10">
+        </div>
         <p>
-            <input type="submit">
+            <input type="submit" value="Generate">
         </p>
 
     }

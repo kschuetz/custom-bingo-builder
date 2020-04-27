@@ -17,6 +17,6 @@ case class Word[A](value: A,
 case class SanitizedHtml(content: String)
 
 
-case class CardData[A](shuffledWords: Vector[Word[A]]) {
-  def map[B](f: A => B): CardData[B] = CardData(shuffledWords.map(_.map(f)))
+case class CardData[A](words: Vector[Word[A]]) {
+  def map[B](f: A => B): CardData[B] = CardData(words.map(_.map(f)))
 }

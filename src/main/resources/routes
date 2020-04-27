@@ -8,7 +8,7 @@ GET         /                           dev.marksman.custombingobuilder.controll
 
 GET         /templates/simple5x5        dev.marksman.custombingobuilder.controllers.Templates.simple5x5
 
-POST        /run                        dev.marksman.custombingobuilder.controllers.HomeController.run()
+POST        /generate        dev.marksman.custombingobuilder.controllers.HomeController.generate
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET         /*file           controllers.Assets.versioned(path="/public", file: Asset)

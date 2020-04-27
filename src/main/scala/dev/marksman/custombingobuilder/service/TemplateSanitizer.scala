@@ -1,31 +1,28 @@
 package dev.marksman.custombingobuilder.service
 
-import cats.data.Validated
+import cats.data.{Validated, ValidatedNec}
 import dev.marksman.custombingobuilder.types.SanitizedHtml
 import org.owasp.html.{HtmlPolicyBuilder, PolicyFactory, Sanitizers}
 
 trait TemplateSanitizer {
-  def sanitizeTemplate(input: String): Validated[String, SanitizedHtml]
+  def sanitizeTemplate(input: String): ValidatedNec[String, SanitizedHtml]
 }
 
 class DefaultTemplateSanitizer extends TemplateSanitizer {
   private val policy = buildOwaspPolicy
 
-  def sanitizeTemplate(input: String): Validated[String, SanitizedHtml] =
+  def sanitizeTemplate(input: String): ValidatedNec[String, SanitizedHtml] =
     preValidate(input)
       .map(sanitizeWithOwasp)
-      .map(postProcess)
       .map(SanitizedHtml)
 
-  private def preValidate(input: String): Validated[String, String] = checkForDocType(input).map(_ => input)
+  private def preValidate(input: String): ValidatedNec[String, String] = checkForDocType(input).map(_ => input)
 
-  private def checkForDocType(input: String): Validated[String, Unit] =
-    if (input.startsWith("<!DOCTYPE html>")) Validated.valid(())
-    else Validated.invalid("template must start with <!DOCTYPE html>")
+  private def checkForDocType(input: String): ValidatedNec[String, Unit] =
+    if (input.startsWith("<!DOCTYPE html>")) Validated.validNec(())
+    else Validated.invalidNec("template must start with <!DOCTYPE html>")
 
   private def sanitizeWithOwasp(input: String): String = policy.sanitize(input)
-
-  private def postProcess(html: String): String = html
 
   private def buildOwaspPolicy: PolicyFactory = {
     val customPolicies = new HtmlPolicyBuilder()
