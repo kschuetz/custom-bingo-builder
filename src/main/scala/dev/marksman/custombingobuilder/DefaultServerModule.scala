@@ -12,5 +12,7 @@ class DefaultServerModule extends AbstractModule {
     bind(classOf[WordSanitizer]).to(classOf[DefaultWordSanitizer]).in(SINGLETON)
     bind(classOf[ImageSanitizer]).in(SINGLETON)
     bind(classOf[PostProcessor]).to(classOf[ImageSanitizer]).in(SINGLETON)
+    bind(classOf[ShufflerFactory]).toInstance(DefaultShufflerFactory)
+    bind(classOf[SheetGenerator]).in(SINGLETON)
   }
 }

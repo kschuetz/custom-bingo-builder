@@ -5,13 +5,14 @@ import akka.util.ByteString
 import cats.data.Validated.{Invalid, Valid}
 import cats.data.{Validated, ValidatedNec}
 import cats.implicits._
-import dev.marksman.custombingobuilder.service.{TemplateSanitizer, WordSanitizer}
+import dev.marksman.custombingobuilder.service.{SheetGenerator, TemplateSanitizer, WordSanitizer}
 import dev.marksman.custombingobuilder.types.{CardData, SanitizedHtml, Word}
 import javax.inject._
 import play.api.libs.streams.Accumulator
 import play.api.mvc.MultipartFormData.FilePart
 import play.api.mvc._
 import play.core.parsers.Multipart.{FileInfo, FilePartHandler}
+import play.twirl.api.Html
 
 import scala.concurrent.ExecutionContext
 
@@ -22,7 +23,8 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class HomeController @Inject()(val controllerComponents: ControllerComponents,
                                templateSanitizer: TemplateSanitizer,
-                               wordSanitizer: WordSanitizer) extends BaseController {
+                               wordSanitizer: WordSanitizer,
+                               sheetGenerator: SheetGenerator) extends BaseController {
   private implicit val executionContext: ExecutionContext = controllerComponents.executionContext
 
   private val MaxTemplateSize = 32768
@@ -37,7 +39,8 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents,
 
     validateForm(request.body) match {
       case Valid(fd) =>
-        Ok(fd.toString)
+        val sheet = sheetGenerator.generateSheet(fd.template, fd.wordList, fd.quantity)
+        Ok(Html(sheet))
       case Invalid(e) =>
         val errors = e.toList.map(s => s"\t- $s\n").mkString("\n")
         BadRequest(s"Errors:\n$errors")

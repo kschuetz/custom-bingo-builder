@@ -32,7 +32,10 @@ class DefaultTemplateSanitizer extends TemplateSanitizer {
       .allowElements("span")
       .allowStyling()
       .allowTextIn("style", "span")
-      .allowAttributes("class").onElements("div", "span", "table", "tr", "th", "td")
+      .allowAttributes("class").globally()
+      .allowElements("th", "td")
+      .allowAttributes("colspan").onElements("th", "td")
+      .allowAttributes("rowspan").onElements("th", "td")
       .allowAttributes("type").onElements("style")
       .allowAttributes("media").onElements("style")
       .toFactory;
@@ -44,6 +47,7 @@ class DefaultTemplateSanitizer extends TemplateSanitizer {
 
 object DefaultTemplateSanitizer {
   def main(args: Array[String]): Unit = {
+    owaspTest()
   }
 
   private def owaspTest(): Unit = {
@@ -54,12 +58,15 @@ object DefaultTemplateSanitizer {
       .allowElements("span")
       .allowStyling()
       .allowTextIn("style", "span")
-      .allowAttributes("class").onElements("div", "span", "table", "tr", "th", "td")
+      .allowAttributes("class").globally()
+      .allowElements("th", "td")
+      .allowAttributes("colspan").onElements("th", "td")
+      .allowAttributes("rowspan").onElements("th", "td")
       .allowAttributes("type").onElements("style")
       .allowAttributes("media").onElements("style")
       .toFactory;
 
-    val policy = customPolicies.and(Sanitizers.TABLES).and(Sanitizers.IMAGES)
+    val policy = Sanitizers.TABLES.and(Sanitizers.IMAGES).and(customPolicies)
 
     println(policy.sanitize(template))
     /*
@@ -128,10 +135,10 @@ object DefaultTemplateSanitizer {
             <!-- elements with class "insert-word" will be filled in with items from word list -->
             <!-- (the existing content, if any, will be replaced) -->
             <div class="card-template">
-              <table>
+              <table class="foo">
                 <thead>
                   <tr>
-                    <th colspan="5">BINGO</th>
+                    <th colspan=5>BINGO</th>
                   </tr>
                 </thead>
                 <tbody>
