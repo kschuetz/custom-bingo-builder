@@ -59,7 +59,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents,
       case None => Validated.invalidNec("Template not provided")
       case Some(FilePart(key, filename, contentType, data, fileSize, dispositionType)) =>
         val templateSource = data.utf8String
-        if (templateSource.isBlank) Validated.invalidNec("Template is blank")
+        if (templateSource.isEmpty) Validated.invalidNec("Template is blank")
         else templateSanitizer.sanitizeTemplate(templateSource)
     }
   }

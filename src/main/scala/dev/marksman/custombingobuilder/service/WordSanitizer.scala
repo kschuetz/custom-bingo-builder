@@ -12,7 +12,7 @@ class DefaultWordSanitizer extends WordSanitizer {
 
   def sanitizeWord(input: String): Option[SanitizedHtml] = {
     val sanitized = policy.sanitize(input.trim).trim
-    if (!sanitized.isBlank) Some(SanitizedHtml(sanitized)) else None
+    if (!sanitized.isEmpty) Some(SanitizedHtml(sanitized)) else None
   }
 
 
