@@ -9,9 +9,6 @@ class TemplateEngineSpec extends FunSuite with Matchers {
   private val tooMany = buildCardData(Vector("foo", "bar", "baz", "qux", "quux", "corge", "grault", "garply", "too-many"))
   private val notEnough = buildCardData(Vector("foo", "bar", "baz"))
 
-  private val htmlItems = buildCardData(Vector("<b>simple</b>",
-    "The quick brown <b>fox</b> jumped over the lazy <b>dogs</b>"))
-
   private val extractTds = """<td>.*</td>""".r
 
   test("renders plain text items") {
@@ -57,6 +54,10 @@ class TemplateEngineSpec extends FunSuite with Matchers {
   test("renders HTML items") {
     val engine = new TemplateEngine(PostProcessor.doNothing)
 
+    val htmlItems = buildCardData(Vector("<b>simple</b>",
+      "The quick brown <b>fox</b> jumped over the lazy <b>dogs</b>",
+      "<img src=\"//example.com/foobar.jpg\" width=200 height=199>"))
+
     val value = engine.render(template, Vector(htmlItems))
     assert(value.isValid)
     val documentText = value.getOrElse("invalid")
@@ -65,7 +66,7 @@ class TemplateEngineSpec extends FunSuite with Matchers {
     allTds shouldBe Vector(
       """<td><span class="extra-class"><b>simple</b></span></td>""",
       """<td><span class="extra-class-1 extra-class-2">The quick brown <b>fox</b> jumped over the lazy <b>dogs</b></span></td>""",
-      """<td><span>!!!not enough words provided!!!</span></td>""",
+      """<td><span><img src="//example.com/foobar.jpg" width="200" height="199"></span></td>""",
       """<td><span>!!!not enough words provided!!!</span></td>""",
       """<td><strong>Free Space</strong></td>""",
       """<td><span>!!!not enough words provided!!!</span></td>""",

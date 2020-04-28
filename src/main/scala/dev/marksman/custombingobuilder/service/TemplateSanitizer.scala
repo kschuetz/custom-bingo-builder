@@ -30,15 +30,17 @@ class DefaultTemplateSanitizer extends TemplateSanitizer {
       .allowCommonBlockElements()
       .allowElements("html", "head", "title", "meta", "style", "body")
       .allowElements("span")
+      .allowElements("th", "td")
       .allowStyling()
       .allowTextIn("style", "span")
       .allowAttributes("class").globally()
-      .allowElements("th", "td")
       .allowAttributes("colspan").onElements("th", "td")
       .allowAttributes("rowspan").onElements("th", "td")
       .allowAttributes("type").onElements("style")
       .allowAttributes("media").onElements("style")
-      .toFactory;
+      .allowAttributes("lang").onElements("html")
+      .allowAttributes("charset", "name", "content").onElements("meta")
+      .toFactory
 
     customPolicies.and(Sanitizers.TABLES).and(Sanitizers.IMAGES)
   }
@@ -56,32 +58,21 @@ object DefaultTemplateSanitizer {
       .allowCommonBlockElements()
       .allowElements("html", "head", "title", "meta", "style", "body")
       .allowElements("span")
+      .allowElements("th", "td")
       .allowStyling()
       .allowTextIn("style", "span")
       .allowAttributes("class").globally()
-      .allowElements("th", "td")
       .allowAttributes("colspan").onElements("th", "td")
       .allowAttributes("rowspan").onElements("th", "td")
       .allowAttributes("type").onElements("style")
       .allowAttributes("media").onElements("style")
-      .toFactory;
+      .allowAttributes("lang").onElements("html")
+      .allowAttributes("charset", "name", "content").onElements("meta")
+      .toFactory
 
     val policy = Sanitizers.TABLES.and(Sanitizers.IMAGES).and(customPolicies)
 
     println(policy.sanitize(template))
-    /*
-    PolicyFactory policy = new HtmlPolicyBuilder()
-    .allowElements("p")
-    .allowElements(
-        (String elementName, List<String> attrs) -> {
-          // Add a class attribute.
-          attrs.add("class");
-          attrs.add("header-" + elementName);
-          // Return elementName to include, null to drop.
-          return "div";
-        }, "h1", "h2", "h3", "h4", "h5", "h6")
-    .toFactory();
-     */
   }
 
 
