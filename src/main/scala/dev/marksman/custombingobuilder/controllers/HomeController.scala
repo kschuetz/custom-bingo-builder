@@ -16,10 +16,6 @@ import play.twirl.api.Html
 
 import scala.concurrent.ExecutionContext
 
-/**
- * This controller creates an `Action` to handle HTTP requests to the
- * application's home page.
- */
 @Singleton
 class HomeController @Inject()(val controllerComponents: ControllerComponents,
                                templateSanitizer: TemplateSanitizer,
@@ -78,7 +74,6 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents,
     }
   }
 
-
   private def requireExactlyOne(fieldName: String, data: Map[String, Seq[String]]): ValidatedNec[String, String] =
     data.get(fieldName).filter(_.nonEmpty).fold(Validated.invalidNec[String, String](s"$fieldName is required")) { ss: Seq[String] =>
       if (ss.size == 1) Validated.validNec(ss.head)
@@ -90,7 +85,6 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents,
       requireExactlyOne("wordlist", mfd.dataParts).andThen(prepareWordList),
       requireExactlyOne("quantity", mfd.dataParts).andThen(validateQuantity)).mapN(FormData)
   }
-
 
   private case class FormData(template: SanitizedHtml,
                               wordList: CardData[SanitizedHtml],

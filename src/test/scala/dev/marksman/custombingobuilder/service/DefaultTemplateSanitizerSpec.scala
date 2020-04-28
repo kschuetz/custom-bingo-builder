@@ -13,14 +13,6 @@ class DefaultTemplateSanitizerSpec extends FunSuite with Matchers {
     sanitizer.sanitizeTemplate("foobar").isInvalid shouldBe true
   }
 
-  test("removes images with relative src") {
-
-  }
-
-  test("does not remove images with absolute src") {
-
-  }
-
   test("inline styling is OK") {
     sanitizer.sanitizeTemplate(createTemplate("<span style=\"color: white;width: 10px;\"></span>")) shouldBe Validated.valid(SanitizedHtml("<span style=\"color:white;width:10px\"></span>"))
   }
