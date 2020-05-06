@@ -5,6 +5,7 @@ import akka.util.ByteString
 import cats.data.Validated.{Invalid, Valid}
 import cats.data.{Validated, ValidatedNec}
 import cats.implicits._
+import dev.marksman.custombingobuilder.Settings
 import dev.marksman.custombingobuilder.service.{SheetGenerator, TemplateSanitizer, WordSanitizer}
 import dev.marksman.custombingobuilder.types.{CardData, SanitizedHtml, Word}
 import javax.inject._
@@ -20,18 +21,17 @@ import scala.concurrent.ExecutionContext
 class HomeController @Inject()(val controllerComponents: ControllerComponents,
                                templateSanitizer: TemplateSanitizer,
                                wordSanitizer: WordSanitizer,
-                               sheetGenerator: SheetGenerator) extends BaseController {
+                               sheetGenerator: SheetGenerator,
+                               settings: Settings) extends BaseController {
   private implicit val executionContext: ExecutionContext = controllerComponents.executionContext
-
-  private val MaxTemplateSize = 32768
 
 
   def index: Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index())
+    Ok(views.html.index(settings))
   }
 
   def generate: Action[MultipartFormData[ByteString]] = Action(parse.multipartFormData(handlePartAsFile,
-    MaxTemplateSize)) { request =>
+    settings.maxTemplateSizeBytes)) { request =>
 
     validateForm(request.body) match {
       case Valid(fd) =>
@@ -41,7 +41,6 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents,
         val errors = e.toList.map(s => s"\t- $s\n").mkString("\n")
         BadRequest(s"Errors:\n$errors")
     }
-
   }
 
   private def handlePartAsFile: FilePartHandler[ByteString] = {
@@ -69,7 +68,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents,
   private def validateQuantity(formValue: String): ValidatedNec[String, Int] = {
     formValue.toIntOption match {
       case None => Validated.invalidNec("quantity must be a number")
-      case Some(n) if n < 0 || n > 100 => Validated.invalidNec("quantity must be between 1 and 100")
+      case Some(n) if n < 0 || n > settings.maxCardsPerSheet => Validated.invalidNec(s"quantity must be between 1 and ${settings.maxCardsPerSheet}")
       case Some(n) => Validated.validNec(n)
     }
   }

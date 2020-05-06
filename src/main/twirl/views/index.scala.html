@@ -1,11 +1,12 @@
-@()(implicit request: RequestHeader)
+@import dev.marksman.custombingobuilder.Settings
+@(settings: Settings)(implicit request: RequestHeader)
 
 @main("Custom Bingo Builder") {
 
     @helper.form(action = dev.marksman.custombingobuilder.controllers.routes.HomeController.generate, Symbol("enctype") -> "multipart/form-data") {
         @helper.CSRF.formField
         <div>
-            <label for="template">Upload a template:</label>
+            <label for="template">Upload a template (max size @settings.maxTemplateSizeBytes bytes):</label>
             <input type="file" name="template" accept="text/html">
         </div>
         <div>
@@ -13,8 +14,8 @@
             <textarea name="wordlist" rows="30" cols="120"></textarea>
         </div>
         <div>
-            <label for="quantity">Number of cards (between 1 and 100):</label>
-            <input type="number" id="quantity" name="quantity" min="1" max="100" value="10">
+            <label for="quantity">Number of cards (between 1 and @settings.maxCardsPerSheet):</label>
+            <input type="number" id="quantity" name="quantity" min="1" max="@settings.maxCardsPerSheet" value="@settings.defaultCardsPerSheet">
         </div>
         <p>
             <input type="submit" value="Generate">
