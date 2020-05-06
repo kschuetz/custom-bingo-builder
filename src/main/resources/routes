@@ -5,10 +5,11 @@
 
 # An example controller showing a sample home page
 GET         /                           dev.marksman.custombingobuilder.controllers.HomeController.index
+GET         /help/templates             dev.marksman.custombingobuilder.controllers.HomeController.templateHelp
 
 GET         /templates/simple5x5        dev.marksman.custombingobuilder.controllers.Templates.simple5x5
 
-POST        /generate        dev.marksman.custombingobuilder.controllers.HomeController.generate
+POST        /generate                   dev.marksman.custombingobuilder.controllers.HomeController.generate
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /*file           controllers.Assets.versioned(path="/public", file: Asset)
+GET         /*file                      controllers.Assets.versioned(path="/public", file: Asset)

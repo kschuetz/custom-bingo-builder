@@ -30,6 +30,10 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents,
     Ok(views.html.index(settings))
   }
 
+  def templateHelp: Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.templateHelp(settings))
+  }
+
   def generate: Action[MultipartFormData[ByteString]] = Action(parse.multipartFormData(handlePartAsFile,
     settings.maxTemplateSizeBytes)) { request =>
 

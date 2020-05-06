@@ -1,0 +1,36 @@
+@import dev.marksman.custombingobuilder.Settings
+@(settings: Settings)(implicit request: RequestHeader)
+
+@main("Custom Bingo Builder - Template Help") {
+
+    <h2>How Templates Work</h2>
+    <ul>
+        <li>The template engine will find the first <code>&lt;div&gt;</code> inside the body that has the class <code>
+            card-template</code>.  Everything inside this
+            <code>&lt;div&gt;</code> represents a single card and will be repeated on the output.</li>
+        <li>Inside the template, any html elements with the class <code>insert-word</code>
+            will have its contents replaced with a random item from
+            the supplied word list.  For example: <code>&lt;span class="insert-word"&gt;&lt;/span&gt;</code></li>
+    </ul>
+
+    <h2>Limitations</h2>
+    <ul>
+        <li>Templates must begin with <code>&lt;!DOCTYPE html&gt;</code></li>
+        <li>Maximum template size is @settings.maxTemplateSizeBytes bytes.</li>
+        <li>Most common HTML elements are permitted, but certain types will be removed.  Hyperlinks, <code>&lt;script&gt;</code>
+            tags, and <code>&lt;link&gt;</code> tags will be removed.</li>
+        <li>All JavaScript will be removed.</li>
+        <li><code>&lt;style&gt;</code> tags and inline styles are permitted.</li>
+        <li><code>&lt;img&gt;</code> tags are permitted, but the <code>src</code>
+            attribute must point to an absolute URL that begins with <code>//</code>
+            .  Images with relative URLs will be removed.</li>
+    </ul>
+
+    <h2>Sample Templates</h2>
+    <ul>
+        <li><a href="@dev.marksman.custombingobuilder.controllers.routes.Templates.simple5x5()">
+            Simple 5x5 Template</a></li>
+    </ul>
+
+    <a href="@dev.marksman.custombingobuilder.controllers.routes.HomeController.index()">Home</a>
+}

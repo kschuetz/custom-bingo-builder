@@ -6,7 +6,9 @@
     @helper.form(action = dev.marksman.custombingobuilder.controllers.routes.HomeController.generate, Symbol("enctype") -> "multipart/form-data") {
         @helper.CSRF.formField
         <div>
-            <label for="template">Upload a template (max size @settings.maxTemplateSizeBytes bytes):</label>
+            <label for="template">
+                Upload a template (<a href="@dev.marksman.custombingobuilder.controllers.routes.HomeController.templateHelp()">
+                help</a>):</label>
             <input type="file" name="template" accept="text/html">
         </div>
         <div>
